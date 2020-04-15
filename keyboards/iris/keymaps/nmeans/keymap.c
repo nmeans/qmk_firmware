@@ -9,10 +9,9 @@ extern keymap_config_t keymap_config;
 #define KC_ KC_TRNS
 #define _______ KC_TRNS
 #define KC_LCTP CTL_T(KC_ESC)
-#define KC_RSTP SFT_T(KC_RGHT)
-#define TAPPING_TOGGLE 2
+#define KC_RSTP RSFT_T(KC_RGHT)
 
-#define KC_XTRA TT(_XTRA)
+#define KC_XTRA MO(_XTRA)
 #define KC_RST RESET
 #define KC_BL_S BL_STEP
 #define KC_DBUG DEBUG
@@ -23,15 +22,21 @@ extern keymap_config_t keymap_config;
 #define KC_RPLN RGB_M_P
 #define KC_RGRD RGB_M_G
 
+#define PERMISSIVE_HOLD
+
 // Tap Dance Stuff
 enum {
   TD_MAGIC_MODIFIER = 0
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [TD_MAGIC_MODIFIER] = ACTION_TAP_DANCE_DOUBLE(KC_LGUI, KC_LALT)
+  [TD_MAGIC_MODIFIER] = ACTION_TAP_DANCE_DOUBLE(KC_LCMD, KC_LALT)
 };
 #define KC_MMOD TD(TD_MAGIC_MODIFIER)
+
+// Chrome Dev Tools
+// We send 'L' here instead of 'I' because I use Colemak on the OS level, not the keyboard level
+#define KC_DTLS LGUI(LALT(KC_L))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -43,9 +48,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
      LCTP, A  , S  , D  , F  , G  ,                H  , J  , K  , L  ,SCLN,QUOT,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-     LSFT, Z  , X  , C  , V  , B  ,MMOD,     MMOD, N  , M  ,COMM,DOT ,SLSH,RSTP,
+     LSFT, Z  , X  , C  , V  , B  , DEL,     ENT , N  , M  ,COMM,DOT ,SLSH,RSTP,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                       XTRA,BSPC,DEL ,        ENT, SPC,  XTRA 
+                       XTRA,MMOD,BSPC,         SPC ,MMOD,XTRA 
   //                  `----+----+----'        `----+----+----'
   ),
 
@@ -53,13 +58,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
       F1 , F2 , F3 , F4 , F5 , F6 ,                F7 , F8 , F9 ,F10 ,F11 ,F12 ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-         ,    ,VOLD,MUTE,VOLU,GRV ,                   , 7  , 8  , 9  ,RVAI,RMOD,
+     TILD,    ,MRWD,MPLY,MFFD,    ,               DTLS, 7  , 8  , 9  ,    ,RVAI,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-         ,    ,MRWD,MPLY,MFFD,LBRC,               RBRC, 4  , 5 ,  6  ,RVAD,RPLN,
+     GRV ,LEFT,DOWN, UP ,RGHT,LCBR,               RCBR, 4  , 5 ,  6  ,    ,RVAD,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-         ,LEFT,DOWN, UP ,RGHT,LCBR,    ,         ,RCBR, 1  , 2  , 3  ,RTOG,RGRD,
+         ,    ,VOLD,MUTE,VOLU,LBRC,    ,     DOT ,RBRC, 1  , 2  , 3  ,    ,RTOG,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                       XTRA,    ,    ,             , 0  ,XTRA 
+                       XTRA,    ,    ,          0  ,ENT ,XTRA 
   //                  `----+----+----'        `----+----+----'
   )
 };
@@ -67,10 +72,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 uint32_t layer_state_set_user(uint32_t state) {
   switch (biton32(state)) {
   case _XTRA:
-    rgblight_mode(32);
+    rgblight_mode_noeeprom(32);
     break;
   default:
-    rgblight_mode(25);
+    rgblight_mode_noeeprom(25);
     break;
   }
   return state;
