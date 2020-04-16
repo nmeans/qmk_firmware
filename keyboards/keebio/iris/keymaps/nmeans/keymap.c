@@ -37,6 +37,9 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 // Chrome Dev Tools
 // We send 'L' here instead of 'I' because I use Colemak on the OS level, not the keyboard level
 #define KC_DTLS LGUI(LALT(KC_L))
+// Zoom Mic Mute
+// We send 'A' here as the keys are in the same spot in Colemak and QWERTY
+#define KC_ZMUT LGUI(LSFT(KC_A))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -58,13 +61,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,----+----+----+----+----+----.              ,----+----+----+----+----+----.
       F1 , F2 , F3 , F4 , F5 , F6 ,                F7 , F8 , F9 ,F10 ,F11 ,F12 ,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     TILD,    ,MRWD,MPLY,MFFD,    ,               DTLS, 7  , 8  , 9  ,    ,RVAI,
+     TILD,    ,    ,VOLU,    ,    ,               DTLS,    , UP ,    ,    ,RVAI,
   //|----+----+----+----+----+----|              |----+----+----+----+----+----|
-     GRV ,LEFT,DOWN, UP ,RGHT,LCBR,               RCBR, 4  , 5 ,  6  ,    ,RVAD,
+     GRV ,    ,MRWD,MPLY,MFFD,    ,                   ,LEFT,DOWN,RGHT,    ,RVAD,
   //|----+----+----+----+----+----+----.    ,----|----+----+----+----+----+----|
-         ,    ,VOLD,MUTE,VOLU,LBRC,    ,     DOT ,RBRC, 1  , 2  , 3  ,    ,RTOG,
+     CAPS,    ,    ,VOLD,    ,    ,    ,     ZMUT,    ,LCBR,RCBR,LBRC,RBRC,RTOG,
   //`----+----+----+--+-+----+----+----/    \----+----+----+----+----+----+----'
-                       XTRA,    ,    ,          0  ,ENT ,XTRA 
+                       XTRA,    ,    ,        MUTE,     ,XTRA 
   //                  `----+----+----'        `----+----+----'
   )
 };
